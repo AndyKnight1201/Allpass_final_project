@@ -1,0 +1,383 @@
+// 通用性設定
+// 顏色
+$primary_color: #f4f2e6;
+$secondary_color: #6accbf;
+// 排版置中flex
+@mixin flex($justify-content, $align-items) {
+  display: flex;
+  justify-content: $justify-content;
+  align-items: $align-items;
+}
+// 長寬設定
+@mixin size($width, $height) {
+  width: $width;
+  height: $height;
+}
+// position top_left
+@mixin position($top, $left, $x, $y) {
+  position: absolute;
+  top: $top;
+  left: $left;
+  transform: translate($x, $y);
+}
+// 排版置中position
+@mixin position_center() {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+}
+*{
+    a{
+      cursor: url("../pics/APmouse2.svg") , auto;
+    }
+    button{
+        cursor: url("../pics/APmouse2.svg") , auto !important;
+    }
+}
+body {
+  background: $primary_color;
+  background-image: url("../pics/right_of_customer/bkgd.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  cursor: url("../pics/APmouse.svg") , auto;
+  &::-webkit-scrollbar {
+    width: 20px;
+  }
+  &::-webkit-scrollbar-track {
+    background-image: linear-gradient(#afdfd3, #fffdf0, #afdfd3);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #009959;
+    border-radius: 50px;
+    &:hover {
+      background-image: linear-gradient(#e94619, #ffea00);
+    }
+  }
+}
+// 頁首固定在視窗上方
+#header {
+  z-index: 100;
+  top: 0;
+  position: sticky;
+  height: 109px;
+  background: #6accbf;
+  display: flex;
+  nav {
+    width: 100%;
+    position: relative;
+    .logo {
+      @include size(140px, 140px);
+      @include position(15px, 125px, 0, 0);
+      border-radius: 50%;
+      background-color: #6accbf;
+      @media(max-width:768px){
+        @include size(100px, 100px);
+        @include position(35px, 60px, 0, 0);
+      }
+    }
+    .logo_img {
+      width: 100px;
+      @include size(125px, 125px);
+      @include position(50%, 50%, -50%, -50%);
+      border-radius: 50%;
+      @media(max-width:768px){
+        @include size(85px, 85px);
+      }
+    }
+    // 導覽列上的文字連結，品牌故事、商品介紹、門市據點、意見回饋
+    .nav_content {
+      @media(max-width:910px){
+        @include position(50%, 70%, -50%, -50%);
+      }
+      @media(max-width:768px){
+        display: none;
+      }
+      @include position(50%, 75%, -50%, -50%);
+      position: absolute;
+      display: flex;
+      ul {
+        display: flex;
+        li {
+          a {
+            font-size: 24px;
+            color: #ffffff;
+            text-decoration: none;
+            margin-right: 30px;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+  // 折疊下拉巢狀選單
+  .burger_link {
+    display: none;
+    @include size(60px, 60px);
+    @media(max-width:768px){
+      display: block;
+    }
+    @media(max-width:576px){
+      margin: 40px 0 0 80%;
+      @include size(80px, 80px);
+    }
+    margin: 30px 0 0 85%;
+    position: relative;
+    * {
+      transition: 0.5s;
+    }
+    ul,
+    li {
+      margin-bottom: 25px;
+    }
+    .burger {
+      @include size(60px, 60px);
+      background-color: #6accbf;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 5px solid #f4bd72;
+      cursor: url("../pics/APmouse2.svg") , auto;
+      .line {
+        height: 3px;
+        width: 20px;
+        background-color: white;
+        margin: 5px;
+      }
+    }
+    #burger:checked + .list {
+      padding: 30px;
+      height: 500px;
+    }
+    .list {
+      @media(max-width:576px){
+        top: 68px;
+      }
+      position: absolute;
+      left: -290px;
+      top: 76px;
+      padding: 0px 30px;
+      width: 400px;
+      height: 0px;
+      overflow: hidden;
+      background-color: #f4bd72;
+      border-radius: 0px 0px 20px 20px;
+      #commodity:checked + .commodity-box {
+        height: 180px;
+      }
+      label,
+      a {
+        border-radius: 10px;
+        padding: 10px 5px;
+        display: block;
+        text-decoration: none;
+        color: white;
+      }
+      .list-project {
+        margin: 5px 0px;
+        padding: 5px 10px;
+        background-color: #6accbf;
+        border: 3px solid white;
+        font-size: 30px;
+        color: white;
+        cursor: url("../pics/APmouse2.svg") , auto;
+        &:hover {
+          background-color: white;
+          border: 6px solid #6accbf;
+          color: #6accbf;
+          font-weight: 600;
+        }
+      }
+      .commodity-box{
+        width: 100%;
+      }
+      .commodity-box,.commodity_test_box{
+        text-align: end;
+        width: 100%;
+        height:0;
+        overflow: hidden;
+        font-size: 30px;
+        background-color: #f4bd72;
+      }
+      // 陰影特效
+      .commodity-list {
+        @include flex(center,center);
+        margin: 5px;
+        font-weight: 600;
+        &:hover {
+          text-shadow: 0 5px 5px black;
+          margin: 10px;
+        }
+      }
+    }
+  }
+}
+// 顧客權益
+// 文字白色方塊背景
+.right_of_customer{
+  width: 80%;
+  background-color: #ffffff;
+  border-radius: 20px;
+  opacity: 70%;
+  margin: 10% auto;
+  padding: 3%;
+  position: relative;
+  // 文字設定
+  .text_color{
+    letter-spacing:10px;
+    line-height: 30px;
+  }
+  // 大標題
+  .right_of_inner_title{
+    width: 100%;
+    font-size: 36px;
+    text-align: center;
+    padding: 2%;
+    @media (max-width:768px){
+      font-size: 30px;
+    }
+    @media (max-width:500px){
+      font-size: 25px;
+    }
+  }
+  // 大標上日期
+  .right_of_inner_title::before{
+    content:" 2020 / 05 / 10 ";
+    display:block;
+    font-size: 24px;
+    padding: 0 0 32px 0;
+    color: #727272;
+    @media (max-width:768px){
+      font-size: 15px;
+      padding: 0 0 10px 0;
+    }
+    @media (max-width:500px){
+      font-size: 12px;
+    }
+  }
+  // 我是分隔線
+  .line::before{
+    content:" ";
+    display:block;
+    width: 100%;
+    border-top: 2px solid black;
+    padding: 2% 0;
+  }
+  // 內文中小標
+  .right_of_inner_text_title{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 3% 0 2% 0;
+    @media (max-width:768px){
+      font-size: 17px;
+      padding: 2% 0 1% 0;
+    }
+  }
+  // 內文
+  .right_of_inner_text{
+    font-size: 20px;
+    @media (max-width:768px){
+      font-size: 15px;
+    }
+  }
+}
+// 頁尾
+#footer {
+  height: 220px;
+  background-image: url("../pics/wave.png");
+  @media(max-width:768px){
+    height: 250px;
+    background-image: url('../pics/wave_md.png');
+  }
+  @media(max-width:576px){
+    background-image: url('../pics/wave_sm.png');
+  }
+  @media(max-width:425px){
+    background-image: url('../pics/wave_ssm.png');
+    height: 210px;
+  }
+  background-size: cover;
+  // max-width: 1920px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  // 頁尾的內容部分
+  .footer_content {
+    // 頁尾波浪型裝飾
+    .wave {
+      max-width: 1600px;
+    }
+  }
+  // logo跟頁尾連結
+  .logo {
+    width: 100px;
+  }
+  .logo_and_links {
+    @media(max-width:768px){
+      padding: 0px 60px;
+    }
+    @media(max-width:425px){
+      padding: 10px 30px;
+    }
+    @include position_center();
+    background: $secondary_color;
+    padding: 10px 60px;
+    width: 100%;
+    // flex分散
+    @include flex(space-between, center);
+    .links_group {
+      // flex置中
+      @include flex(center, center);
+      flex-wrap: wrap;
+      // 頁尾的各項連結，顧客權益、聯絡我們、意見回饋、粉專頁等
+      .link {
+        @include flex(center, center);
+        @media (max-width: 768px) {
+          width: 50%;
+          margin: 10px;
+        }
+        @media(max-width:425px){
+          margin: 5px;
+        }
+        padding: 0 15px;
+        a {
+          @media(max-width:576px){
+            font-size: 20px;
+          }
+          color: white;
+          font-weight: bold;
+          font-size: 24px;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+  .company_and_phone {
+    @media (max-width: 768px) {
+      display: flex;
+      flex-wrap: wrap;
+      bottom: -100px;
+      p {
+        display: block;
+        text-align: center;
+        width: 100%;
+        padding: 5px;
+      }
+    }
+    @include flex(space-between, center);
+    width: 100%;
+    padding: 20px 16px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    p {
+      font-size: 24px;
+    }
+  }
+  .go_to_top{
+    right: 10px;
+    top: 100px;
+    position: absolute;
+  }
+}

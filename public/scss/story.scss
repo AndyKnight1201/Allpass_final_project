@@ -1,0 +1,938 @@
+// 通用性設定
+// 顏色
+$primary_color: #f4f2e6;
+$secondary_color: #6accbf;
+
+// 排版置中flex
+@mixin flex($justify-content, $align-items) {
+    display: flex;
+    justify-content: $justify-content;
+    align-items: $align-items;
+}
+
+// 長寬設定
+@mixin size($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+// position top_left
+@mixin position($top, $left, $x, $y) {
+    position: absolute;
+    top: $top;
+    left: $left;
+    transform: translate($x, $y);
+}
+
+// 排版置中position
+@mixin position_center() {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+}
+
+* {
+    a {
+        cursor: url("../pics/APmouse2.svg"), auto;
+    }
+
+    button {
+        cursor: url("../pics/APmouse2.svg"), auto !important;
+    }
+}
+
+body {
+    background: $primary_color;
+    cursor: url("../pics/APmouse.svg"), auto;
+
+    &::-webkit-scrollbar {
+        width: 20px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-image: linear-gradient(#afdfd3, #fffdf0, #afdfd3);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #009959;
+        border-radius: 50px;
+
+        &:hover {
+            background-image: linear-gradient(#e94619, #ffea00);
+        }
+    }
+}
+
+// 頁首固定在視窗上方
+#header {
+    z-index: 100;
+    top: 0;
+    position: sticky;
+    height: 109px;
+    background: #6accbf;
+    display: flex;
+
+    nav {
+        width: 100%;
+        position: relative;
+
+        .logo {
+            @include size(140px, 140px);
+            @include position(15px, 125px, 0, 0);
+            border-radius: 50%;
+            background-color: #6accbf;
+            z-index: 5;
+
+            @media(max-width:768px) {
+                @include size(100px, 100px);
+                @include position(35px, 60px, 0, 0);
+            }
+        }
+
+        .logo_img {
+            width: 100px;
+            @include size(125px, 125px);
+            @include position(50%, 50%, -50%, -50%);
+            border-radius: 50%;
+
+            @media(max-width:768px) {
+                @include size(85px, 85px);
+            }
+        }
+
+        // 導覽列上的文字連結，品牌故事、商品介紹、門市據點、意見回饋
+        .nav_content {
+            @media(max-width:910px) {
+                @include position(50%, 70%, -50%, -50%);
+            }
+
+            @media(max-width:768px) {
+                display: none;
+            }
+
+            @include position(50%, 75%, -50%, -50%);
+            position: absolute;
+            display: flex;
+
+            ul {
+                display: flex;
+
+                li {
+                    a {
+                        font-size: 24px;
+                        color: #ffffff;
+                        text-decoration: none;
+                        margin-right: 30px;
+                        white-space: nowrap;
+                    }
+                }
+            }
+        }
+    }
+
+    // 折疊下拉巢狀選單
+    .burger_link {
+        display: none;
+        @include size(60px, 60px);
+
+        @media(max-width:768px) {
+            display: block;
+        }
+
+        @media(max-width:576px) {
+            margin: 40px 0 0 80%;
+            @include size(80px, 80px);
+        }
+
+        margin: 30px 0 0 85%;
+        position: relative;
+
+        * {
+            transition: 0.5s;
+        }
+
+        ul,
+        li {
+            margin-bottom: 25px;
+        }
+
+        .burger {
+            @include size(60px, 60px);
+            background-color: #6accbf;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 5px solid #f4bd72;
+            cursor: url("../pics/APmouse2.svg"), auto;
+
+            .line {
+                height: 3px;
+                width: 20px;
+                background-color: white;
+                margin: 5px;
+            }
+        }
+
+        #burger:checked+.list {
+            padding: 30px;
+            height: 500px;
+        }
+
+        .list {
+            @media(max-width:576px) {
+                top: 68px;
+            }
+
+            position: absolute;
+            left: -290px;
+            top: 76px;
+            padding: 0px 30px;
+            width: 400px;
+            height: 0px;
+            overflow: hidden;
+            background-color: #f4bd72;
+            border-radius: 0px 0px 20px 20px;
+
+            #commodity:checked+.commodity-box {
+                height: 180px;
+            }
+
+            label,
+            a {
+                border-radius: 10px;
+                padding: 10px 5px;
+                display: block;
+                text-decoration: none;
+                color: white;
+            }
+
+            .list-project {
+                margin: 5px 0px;
+                padding: 5px 10px;
+                background-color: #6accbf;
+                border: 3px solid white;
+                font-size: 30px;
+                color: white;
+                cursor: url("../pics/APmouse2.svg"), auto;
+
+                &:hover {
+                    background-color: white;
+                    border: 6px solid #6accbf;
+                    color: #6accbf;
+                    font-weight: 600;
+                }
+            }
+
+            .commodity-box {
+                width: 100%;
+            }
+
+            .commodity-box,
+            .commodity_test_box {
+                text-align: end;
+                width: 100%;
+                height: 0;
+                overflow: hidden;
+                font-size: 30px;
+                background-color: #f4bd72;
+            }
+
+            // 陰影特效
+            .commodity-list {
+                @include flex(center, center);
+                margin: 5px;
+                font-weight: 600;
+
+                &:hover {
+                    text-shadow: 0 5px 5px black;
+                    margin: 10px;
+                }
+            }
+        }
+    }
+}
+
+// 品牌故事
+ul {
+    // 修 data-aos="fade-left" bug
+    overflow: hidden;
+
+    .top_photo {
+        background-image: url("../pics/top_img.svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 50vw;
+    }
+
+    .story_of_allpass {
+        position: relative;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        animation: titleword 4s ease-in-out infinite;
+
+        img {
+            @include size(80%, 80%);
+            padding: 3%;
+        }
+
+        .story_content {
+            @include size(50%, 60%);
+            position: absolute;
+            top: 25%;
+
+            .title {
+                text-align: center;
+                font-size: 100px;
+                color: #6accbf;
+
+                @media(max-width:1500px) {
+                    font-size: 80px;
+                }
+
+                @media(max-width:1440px) {
+                    font-size: 60px;
+                }
+
+                @media(max-width:768px) {
+                    font-size: 35px;
+                }
+
+                @media(max-width:550px) {
+                    font-size: 25px;
+                }
+
+                @media(max-width:380px) {
+                    font-size: 20px;
+                }
+            }
+
+            .title::after {
+                @include size(100%, 2px);
+                content: '';
+                display: block;
+                background-color: #FEAD3B;
+                margin: 3% auto;
+
+            }
+
+            .show {
+                font-size: 35px;
+                color: #544027b7;
+                text-align: center;
+                padding: 1% 0;
+
+                @media(max-width:990px) {
+                    font-size: 25px;
+                }
+
+                @media(max-width:768px) {
+                    font-size: 20px;
+                }
+
+                @media(max-width:550px) {
+                    font-size: 15px;
+                }
+
+                @media(max-width:400px) {
+                    font-size: 10px;
+                }
+
+                .inner_text {
+                    font-size: 43px;
+                    padding: 2% 2% 0 2%;
+                    line-height: 55px;
+
+                    @media(max-width:1500px) {
+                        font-size: 40px;
+                    }
+
+                    @media(max-width:1290px) {
+                        font-size: 35px;
+                        line-height: 45px;
+                    }
+
+                    @media(max-width:1150px) {
+                        font-size: 25px;
+                        line-height: 40px;
+                    }
+
+                    @media(max-width:990px) {
+                        font-size: 15px;
+                        line-height: 50px;
+                    }
+
+                    @media(max-width:768px) {
+                        font-size: 13px;
+                        line-height: 30px;
+                    }
+
+                    @media(max-width:608px) {
+                        font-size: 13px;
+                        line-height: 27px;
+                    }
+
+                    @media(max-width:550px) {
+                        font-size: 10px;
+                    }
+
+                    @media(max-width:495px) {
+                        line-height: 15px;
+                    }
+
+                    @media(max-width:380px) {
+                        line-height: 30px;
+                    }
+                }
+
+                .inner_text_2 {
+                    @media(max-width:380px) {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// 球位置
+ul {
+    .item1 {
+        margin: 0 auto;
+        z-index: 1;
+        position: relative;
+        animation: float_two 4s ease-in-out infinite;
+
+
+
+        img {
+            @include size(65%, 65%);
+            // padding: 3%;
+            position: relative;
+            left: -10%;
+            top: -200px;
+            border-radius: 50%;
+
+
+            @media (max-width:1100px) {
+                top: -150px;
+            }
+
+            @media (max-width:850px) {
+                top: -130px;
+            }
+        }
+
+        .title {
+            @include size(30%, 50%);
+            position: absolute;
+            top: 10%;
+            left: 15%;
+            font-size: 100px;
+            color: #FFFBF2;
+            text-align: end;
+
+            @media(max-width:1700px) {
+                font-size: 70px;
+            }
+
+            @media(max-width:1610px) {
+                @include size(30%, 30%);
+                top: 3%;
+                left: 15%;
+                font-size: 45px;
+            }
+
+            @media(max-width:1580px) {
+                left: 10%;
+            }
+
+            @media(max-width:1300px) {
+                top: 4%;
+            }
+
+            @media(max-width:1200px) {
+                top: 1%;
+                left: 10%;
+            }
+
+            @media(max-width:950px) {
+                @include size(40%, 30%);
+                font-size: 40px;
+                top: -5%;
+                left: 5%;
+            }
+
+            @media(max-width:768px) {
+                @include size(50%, 30%);
+                text-align: center;
+                left: 25%;
+                top: 17%;
+                font-size: 25px;
+            }
+
+            @media(max-width:625px) {
+                @include size(40%, 30%);
+                left: 30%;
+            }
+
+            @media(max-width:540px) {
+                font-size: 20px;
+            }
+
+            .text {
+                font-size: 40px;
+                text-align: end;
+                padding-top: 5%;
+                line-height: 55px;
+                text-align: start;
+
+                @media(max-width:1440px) {
+                    font-size: 22px;
+                    line-height: 40px;
+                }
+
+                @media(max-width:950px) {
+                    font-size: 18px;
+                }
+
+                @media(max-width:768px) {
+                    text-align: center;
+                }
+
+                @media(max-width:625px) {
+                    font-size: 15px;
+                    line-height: 30px;
+                }
+
+                @media(max-width:540px) {
+                    line-height: 25px;
+                }
+
+                @media(max-width:485px) {
+                    font-size: 12px;
+                    line-height: 24px;
+                }
+
+                @media(max-width:425px) {
+                    line-height: 20px;
+                }
+
+                @media(max-width:385px) {
+                    line-height: 18px;
+                }
+
+                @media(max-width:360px) {
+                    line-height: 15px;
+                }
+
+                @media(max-width:335px) {
+                    line-height: 13px;
+                }
+            }
+        }
+    }
+
+    .item2 {
+        margin: 0 auto;
+        position: relative;
+
+        img {
+            @include size(45%, 45%);
+            position: relative;
+            left: 40%;
+            top: -200px;
+            animation: float 4s ease-in-out infinite;
+            transition: 0.5s;
+
+            &:hover {
+                width: 50%;
+                height: 50%;
+            }
+        }
+
+    }
+
+    .item3 {
+        margin: 0 auto;
+        z-index: 1;
+        position: relative;
+        animation: titleword 4s ease-in-out infinite;
+        transition: 0.5s;
+
+        img {
+            @include size(65%, 65%);
+            position: relative;
+            left: -2%;
+            top: -270px;
+        }
+
+        .type {
+            @include size(30%, unset);
+            position: absolute;
+            bottom: 50%;
+            left: 10%;
+            font-size: 40px;
+            line-height: 70px;
+            color: #F4F2E6;
+            text-align: start;
+
+            @media(max-width:1440px) {
+                bottom: 60%;
+                left: 10%;
+                font-size: 24px;
+                line-height: 40px;
+            }
+
+            @media(max-width:950px) {
+                bottom: 67%;
+                left: 13%;
+                font-size: 20px;
+            }
+
+            @media(max-width:768px) {
+                text-align: center;
+                left: 35%;
+                top: 18%;
+            }
+
+            @media(max-width:620px) {
+                font-size: 15px;
+                line-height: 30px;
+            }
+
+            @media(max-width:460px) {
+                font-size: 13px;
+                line-height: 25px;
+            }
+
+            @media(max-width:385px) {
+                font-size: 11px;
+                line-height: 20px;
+            }
+        }
+
+        .type::before {
+            content: " 餐點種類";
+            display: block;
+            font-size: 80px;
+            text-align: start;
+            padding-bottom: 10%;
+
+            @media(max-width:1540px) {
+                font-size: 65px;
+                padding-bottom: 8%;
+            }
+
+            @media(max-width:1440px) {
+                font-size: 50px;
+                padding-bottom: 5%;
+            }
+
+            @media(max-width:950px) {
+                font-size: 40px;
+            }
+
+            @media(max-width:768px) {
+                text-align: center;
+            }
+
+            @media(max-width:620px) {
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+        }
+
+        .type::after {
+            content: " ";
+            display: block;
+            border-bottom: 2px solid #F4F2E6;
+            padding-top: 5%;
+
+            @media(max-width:768px) {
+                display: none;
+            }
+
+            @media(max-width:620px) {
+                font-size: 15px;
+            }
+        }
+    }
+
+    .item4 {
+        margin: 0 auto;
+
+        img {
+            @include size(50%, 50%);
+            // padding: 3%;
+            position: relative;
+            left: -5%;
+            top: -330px;
+            animation: float_two 4s ease-in-out infinite;
+            transition: 0.5s;
+
+            &:hover {
+                width: 55%;
+                height: 55%;
+            }
+        }
+
+    }
+
+    .item5 {
+        margin: 0 auto;
+
+        img {
+            @include size(35%, 35%);
+            // padding: 3%;
+            position: relative;
+            left: 50%;
+            top: -270px;
+            animation: float 4s ease-in-out infinite;
+            transition: 0.5s;
+
+            &:hover {
+                width: 40%;
+                height: 40%;
+            }
+        }
+
+    }
+
+    .item6 {
+        margin: 0 auto;
+
+        img {
+            @include size(20%, 20%);
+            // padding: 3%;
+            position: relative;
+            left: 10%;
+            top: -270px;
+            animation: float 4s ease-in-out infinite;
+            transition: 0.5s;
+        }
+    }
+
+    @keyframes float {
+
+        from,
+        to {
+            transform: translate(0, 3%);
+        }
+
+        25% {
+            transform: translate(-3%, 0);
+        }
+
+        50% {
+            transform: translate(0, -3%);
+        }
+
+        75% {
+            transform: translate(3%, 0);
+        }
+    }
+
+    @keyframes float_two {
+
+        from,
+        to {
+            transform: translate(0, 2%);
+        }
+
+        30% {
+            transform: translate(-2%, 0);
+        }
+
+        55% {
+            transform: translate(0, -2%);
+        }
+
+        80% {
+            transform: translate(2%, 0);
+        }
+    }
+
+
+    @keyframes titleword {
+
+        from,
+        to {
+            transform: translate(0, 1%);
+        }
+
+        20% {
+            transform: translate(-1%, 0);
+        }
+
+        45% {
+            transform: translate(0, -1%);
+        }
+
+        70% {
+            transform: translate(1%, 0);
+        }
+    }
+
+
+    @media (max-width:768px) {
+        .item {
+            display: flex;
+            justify-content: center;
+
+            img {
+                position: unset;
+                left: unset;
+                top: unset;
+                margin: 20px auto;
+            }
+
+            .content {
+                text-align: center;
+            }
+
+            .mask {
+                display: none;
+            }
+        }
+
+        .item6 {
+            img {
+                left: 3%;
+                top: -20px;
+                margin: 20px auto;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+// 頁尾
+#footer {
+    height: 220px;
+    background: $primary_color;
+    background-image: url("../pics/wave.png");
+
+    @media(max-width:768px) {
+        height: 250px;
+        background-image: url('../pics/wave_md.png');
+    }
+
+    @media(max-width:576px) {
+        background-image: url('../pics/wave_sm.png');
+    }
+
+    @media(max-width:425px) {
+        background-image: url('../pics/wave_ssm.png');
+        height: 210px;
+    }
+
+    background-size: cover;
+    // max-width: 1920px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    position: relative;
+
+    // 頁尾的內容部分
+    .footer_content {
+
+        // 頁尾波浪型裝飾
+        .wave {
+            max-width: 1600px;
+        }
+    }
+
+    // logo跟頁尾連結
+    .logo {
+        width: 100px;
+    }
+
+    .logo_and_links {
+        @media(max-width:768px) {
+            padding: 0px 60px;
+        }
+
+        @media(max-width:425px) {
+            padding: 10px 30px;
+        }
+
+        @include position_center();
+        background: $secondary_color;
+        padding: 10px 60px;
+        width: 100%;
+        // flex分散
+        @include flex(space-between, center);
+
+        .links_group {
+            // flex置中
+            @include flex(center, center);
+            flex-wrap: wrap;
+
+            // 頁尾的各項連結，顧客權益、聯絡我們、意見回饋、粉專頁等
+            .link {
+                @include flex(center, center);
+
+                @media (max-width: 768px) {
+                    width: 50%;
+                    margin: 10px;
+                }
+
+                @media(max-width:425px) {
+                    margin: 5px;
+                }
+
+                padding: 0 15px;
+
+                a {
+                    @media(max-width:576px) {
+                        font-size: 20px;
+                    }
+
+                    color: white;
+                    font-weight: bold;
+                    font-size: 24px;
+                    white-space: nowrap;
+                }
+            }
+        }
+    }
+
+    .company_and_phone {
+        @media (max-width: 768px) {
+            display: flex;
+            flex-wrap: wrap;
+            bottom: -100px;
+
+            p {
+                display: block;
+                text-align: center;
+                width: 100%;
+                padding: 5px;
+            }
+        }
+
+        @include flex(space-between, center);
+        width: 100%;
+        padding: 20px 16px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+
+        p {
+            font-size: 24px;
+        }
+    }
+
+    .go_to_top {
+        right: 10px;
+        top: 100px;
+        position: absolute;
+    }
+}

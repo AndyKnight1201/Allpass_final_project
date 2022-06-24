@@ -1,4 +1,4 @@
-<img src="https://github.com/AndyKnight1201/Allpass_final_project/blob/main/public/pics/demo_pics/all_pass_paper.png" style="width:400px">
+<img src="https://github.com/AndyKnight1201/Allpass_final_project/blob/main/public/pics/demo_pics/all_pass_paper.jpg" style="width:400px">
 
 ## 全端協作專題-歐巴斯專案
 簡介:
